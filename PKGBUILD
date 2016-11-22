@@ -3,7 +3,7 @@
 #'https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/st'
 
 pkgname=st
-pkgver=0.7.5.gf739843
+pkgver=0.7.14.g740ada1
 pkgrel=1
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
@@ -22,11 +22,11 @@ source=('git://git.suckless.org/st'
 sha1sums=('SKIP'
           'e15232da0d5d5e9c4c80ab001f350fd7bb75bfe7'
           'ace82e8b5a878157b913e0f309452b7fb3eebc7e'
-          '9827a5f22efc8d0b30d0ff81ec18f68a72bc9f7b'
-          '0576ea2ab9f39a43ec5aec5005eb35e4c2cac219'
+          'f5a80bcc3a3cd04c02794808765b9db0495538f9'
+          '02beef1cc9665b36f29b4a232c40b9ea8e7c1aaa'
           '26648577ae77ba0b83d47385cae4f5b9a386a9ad'
           '52ffb09af39d3581dbfc21cdbe9c0e11d062d71d'
-          'fae38d1bea0a538184472662a7a87f6643f662d0')
+          'fdf8ec9cedb4046f91d1215abdaf865a16eaa58c')
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
