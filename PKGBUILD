@@ -3,8 +3,8 @@
 #'https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/st'
 
 pkgname=st
-pkgver=0.7.14.g740ada1
-pkgrel=1
+pkgver=0.8.1
+pkgrel=80
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64')
@@ -13,20 +13,16 @@ depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses' 'git')
 source=('git://git.suckless.org/st'
   '1.diff'
+  '2.diff'
   '3.diff'
   '4.diff'
-  '5.diff'
-  '6.diff'
-  '7.diff'
-  '8.diff')
+  '5.diff')
 sha1sums=('SKIP'
-          'e15232da0d5d5e9c4c80ab001f350fd7bb75bfe7'
-          'ace82e8b5a878157b913e0f309452b7fb3eebc7e'
-          'f5a80bcc3a3cd04c02794808765b9db0495538f9'
-          '02beef1cc9665b36f29b4a232c40b9ea8e7c1aaa'
-          '26648577ae77ba0b83d47385cae4f5b9a386a9ad'
-          '52ffb09af39d3581dbfc21cdbe9c0e11d062d71d'
-          'fdf8ec9cedb4046f91d1215abdaf865a16eaa58c')
+          '72bc03bb16a29fd996761f6216717eec67f50a0e'
+          '623f474b62fb08e0b470673bf8ea947747e1af8b'
+          '46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
+          'd3329413998c5f3feaa7764db36269bf7b3d1334'
+          'aad7fb654ab36b122a36c3e8a87a7135d50ef749')
 
 pkgver() {
   cd "${srcdir}/${pkgname}"
@@ -36,16 +32,15 @@ pkgver() {
 prepare() {
   local file
   cd "${srcdir}/${pkgname}"
-  mv config.def.h config.h
-  sed 's/CPPFLAGS =/CPPFLAGS +=/g' -i config.mk
-  #Remove terminfo stuff (per Arch's official package PKGBUILD)
-  sed '/@tic/d' -i Makefile
   for file in "${source[@]}"; do
     if [[ "${file}" == *.diff ]]; then
       msg "Applying ${file}..."
       patch -Np1 <"${srcdir}/${file}"
     fi
   done
+  mv config.def.h config.h
+  #Remove terminfo stuff (per Arch's official package PKGBUILD)
+  #sed '/@tic/d' -i Makefile
 }
 
 build() {
