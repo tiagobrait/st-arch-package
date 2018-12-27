@@ -4,7 +4,7 @@
 
 pkgname=st
 pkgver=0.8.1
-pkgrel=80
+pkgrel=81
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64')
@@ -12,22 +12,26 @@ license=('MIT')
 depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses' 'git')
 source=('git://git.suckless.org/st'
-  '1.diff'
-  '2.diff'
-  '3.diff'
-  '4.diff'
-  '5.diff')
-sha1sums=('SKIP'
-          '72bc03bb16a29fd996761f6216717eec67f50a0e'
-          '623f474b62fb08e0b470673bf8ea947747e1af8b'
-          '46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
-          'd3329413998c5f3feaa7764db36269bf7b3d1334'
-          'aad7fb654ab36b122a36c3e8a87a7135d50ef749')
+'1_font_shell_utmp.diff'
+'st-clipboard-0.8.1.diff'
+'st-hidecursor-0.8.1.diff'
+'st-scrollback-0.8_1.diff'
+'st-scrollback-0.8_2.diff'
+'st-scrollback-0.8_3.diff'
+'st-vertcenter-20180320-6ac8c8a.diff'
+)
 
-pkgver() {
-  cd "${srcdir}/${pkgname}"
-  git describe --tag | tr '-' '.'
-}
+
+sha1sums=('SKIP'
+'c71322158a01d563135ea985502739cacb494c7e'
+'26e946870fa7ab3907cd6b8972ebbbd6a3aa0fe5'
+'a5db64611e0dcf163eed3810c525addad3403718'
+'8db2dd42eea766e632cf881b1800a03a32aa0dc7'
+'46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
+'d3329413998c5f3feaa7764db36269bf7b3d1334'
+'aad7fb654ab36b122a36c3e8a87a7135d50ef749'
+)
+
 
 prepare() {
   local file

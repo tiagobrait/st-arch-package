@@ -1,0 +1,24 @@
+diff --git a/config.def.h b/config.def.h
+index 823e79f..98f276f 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -5,7 +5,7 @@
+  *
+  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
+  */
+-static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
++static char *font = "DejaVuSansMono Nerd Font Mono:size=11:antialias=true:autohint=true";
+ static int borderpx = 2;
+ 
+ /*
+@@ -16,8 +16,8 @@ static int borderpx = 2;
+  * 4: value of shell in /etc/passwd
+  * 5: value of shell in config.h
+  */
+-static char *shell = "/bin/sh";
+-char *utmp = NULL;
++static char *shell = "/bin/bash";
++char *utmp = "/usr/bin/utmp";
+ char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
+ 
+ /* identification sequence returned in DA and DECID */
