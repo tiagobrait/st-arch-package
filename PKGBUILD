@@ -3,8 +3,8 @@
 #'https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/st'
 
 pkgname=st
-pkgver=0.8.1
-pkgrel=81
+pkgver=0.8.2
+pkgrel=5
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64')
@@ -23,14 +23,13 @@ source=('git://git.suckless.org/st'
 
 
 sha1sums=('SKIP'
-'a101155f8480c7a61af932f377613f1bbafa365f'
-'26e946870fa7ab3907cd6b8972ebbbd6a3aa0fe5'
-'a5db64611e0dcf163eed3810c525addad3403718'
-'8db2dd42eea766e632cf881b1800a03a32aa0dc7'
-'46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
-'d3329413998c5f3feaa7764db36269bf7b3d1334'
-'aad7fb654ab36b122a36c3e8a87a7135d50ef749'
-)
+          'b53d7ced152902f8ecd5f8dbea47b887f64d5939'
+          '26e946870fa7ab3907cd6b8972ebbbd6a3aa0fe5'
+          'a5db64611e0dcf163eed3810c525addad3403718'
+          '8db2dd42eea766e632cf881b1800a03a32aa0dc7'
+          '46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
+          'd3329413998c5f3feaa7764db36269bf7b3d1334'
+          'aad7fb654ab36b122a36c3e8a87a7135d50ef749')
 
 
 prepare() {
