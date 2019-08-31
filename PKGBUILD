@@ -19,6 +19,7 @@ source=('git://git.suckless.org/st'
 'st-scrollback-0.8_2.diff'
 'st-scrollback-0.8_3.diff'
 'st-vertcenter-20180320-6ac8c8a.diff'
+'st-base16.diff'
 )
 
 
@@ -29,7 +30,8 @@ sha1sums=('SKIP'
           '8db2dd42eea766e632cf881b1800a03a32aa0dc7'
           '46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
           'd3329413998c5f3feaa7764db36269bf7b3d1334'
-          'aad7fb654ab36b122a36c3e8a87a7135d50ef749')
+          'aad7fb654ab36b122a36c3e8a87a7135d50ef749'
+          'fbd757314885a7c229f8db67b129f2f48289bbd1')
 
 
 prepare() {
