@@ -1,8 +1,8 @@
 diff --git a/x.c b/x.c
-index c343ba2..a40de8c 100644
+index bc3ad5a..dccc714 100644
 --- a/x.c
 +++ b/x.c
-@@ -96,6 +96,11 @@ typedef struct {
+@@ -99,6 +99,11 @@ typedef struct {
  	Draw draw;
  	Visual *vis;
  	XSetWindowAttributes attrs;
@@ -14,7 +14,7 @@ index c343ba2..a40de8c 100644
  	int scr;
  	int isfixed; /* is fixed geometry? */
  	int l, t; /* left and top offset */
-@@ -652,6 +657,13 @@ brelease(XEvent *e)
+@@ -678,6 +683,13 @@ brelease(XEvent *e)
  void
  bmotion(XEvent *e)
  {
@@ -25,10 +25,10 @@ index c343ba2..a40de8c 100644
 +			xsetpointermotion(0);
 +	}
 +
- 	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forceselmod)) {
+ 	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forcemousemod)) {
  		mousereport(e);
  		return;
-@@ -997,10 +1009,10 @@ void
+@@ -1062,11 +1074,10 @@ void
  xinit(int cols, int rows)
  {
  	XGCValues gcvalues;
@@ -36,12 +36,13 @@ index c343ba2..a40de8c 100644
  	Window parent;
  	pid_t thispid = getpid();
  	XColor xmousefg, xmousebg;
+-
 +	Pixmap blankpm;
- 
  	if (!(xw.dpy = XOpenDisplay(NULL)))
- 		die("Can't open display\n");
-@@ -1076,8 +1088,9 @@ xinit(int cols, int rows)
- 		die("XCreateIC failed. Could not obtain input method.\n");
+ 		die("can't open display\n");
+ 	xw.scr = XDefaultScreen(xw.dpy);
+@@ -1126,8 +1137,9 @@ xinit(int cols, int rows)
+ 	ximopen(xw.dpy);
  
  	/* white cursor, black outline */
 -	cursor = XCreateFontCursor(xw.dpy, mouseshape);
@@ -52,7 +53,7 @@ index c343ba2..a40de8c 100644
  
  	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
  		xmousefg.red   = 0xffff;
-@@ -1091,7 +1104,10 @@ xinit(int cols, int rows)
+@@ -1141,7 +1153,10 @@ xinit(int cols, int rows)
  		xmousebg.blue  = 0x0000;
  	}
  
@@ -64,7 +65,7 @@ index c343ba2..a40de8c 100644
  
  	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
  	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
-@@ -1574,6 +1590,8 @@ unmap(XEvent *ev)
+@@ -1631,6 +1646,8 @@ unmap(XEvent *ev)
  void
  xsetpointermotion(int set)
  {
@@ -73,7 +74,7 @@ index c343ba2..a40de8c 100644
  	MODBIT(xw.attrs.event_mask, set, PointerMotionMask);
  	XChangeWindowAttributes(xw.dpy, xw.win, CWEventMask, &xw.attrs);
  }
-@@ -1692,6 +1710,12 @@ kpress(XEvent *ev)
+@@ -1749,6 +1766,12 @@ kpress(XEvent *ev)
  	Status status;
  	Shortcut *bp;
  

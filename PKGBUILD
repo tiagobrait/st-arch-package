@@ -4,7 +4,7 @@
 
 pkgname=st
 pkgver=0.8.2
-pkgrel=5
+pkgrel=99
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64')
@@ -12,26 +12,30 @@ license=('MIT')
 depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses' 'git')
 source=('git://git.suckless.org/st'
-'1_font_shell_utmp.diff'
-'st-clipboard-0.8.1.diff'
-'st-hidecursor-0.8.1.diff'
-'st-scrollback-0.8_1.diff'
-'st-scrollback-0.8_2.diff'
-'st-scrollback-0.8_3.diff'
+'st-custom-tiagobrait.diff'
+'st-scrollback-20190331-21367a0.diff'
+'st-scrollback-mouse-20191024-a2c479c.diff'
+'st-scrollback-mouse-altscreen-20191024-a2c479c.diff'
+'st-hidecursor-0.8.2.diff'
+'st-clipboard-20180309-c5ba9c0.diff'
+'st-bold-is-not-bright-0.8.2.diff'
+'st-base16-0.8.2.diff'
+'st-anysize-0.8.2.diff'
 'st-vertcenter-20180320-6ac8c8a.diff'
-'st-base16.diff'
 )
 
 
 sha1sums=('SKIP'
-          'b53d7ced152902f8ecd5f8dbea47b887f64d5939'
-          '26e946870fa7ab3907cd6b8972ebbbd6a3aa0fe5'
-          'a5db64611e0dcf163eed3810c525addad3403718'
-          '8db2dd42eea766e632cf881b1800a03a32aa0dc7'
-          '46e92d9d3f6fd1e4f08ed99bda16b232a1687407'
-          'd3329413998c5f3feaa7764db36269bf7b3d1334'
-          'aad7fb654ab36b122a36c3e8a87a7135d50ef749'
-          'fbd757314885a7c229f8db67b129f2f48289bbd1')
+          '1cb60ce81256f8294c9b1ebd90c9ef857a41172f'
+          'fc5140eb0cc74636e5a0f5cd629e3cfbd10c9ed7'
+          'e457b4819f5233999e21d6df8438931160cd9181'
+          '0648ea793dbb9e7e6ab8b3c841c25ab39a001eb0'
+          'b020afee7209a55014dbc317606c7443461a1c03'
+          'ef12fb41f1405b7236755eb1ca320b39ed03fe58'
+          'bef42114952e4fead262bb1b491112014ac7bc39'
+          'fbd757314885a7c229f8db67b129f2f48289bbd1'
+          'a75f5eaee7b05b1cd960ef133a34d3aeb69d8f27'
+          'aad7fb654ab36b122a36c3e8a87a7135d50ef749')
 
 
 prepare() {
@@ -39,13 +43,11 @@ prepare() {
   cd "${srcdir}/${pkgname}"
   for file in "${source[@]}"; do
     if [[ "${file}" == *.diff ]]; then
-      msg "Applying ${file}..."
+      msg "Applying ${file} patch..."
       patch -Np1 <"${srcdir}/${file}"
     fi
   done
   mv config.def.h config.h
-  #Remove terminfo stuff (per Arch's official package PKGBUILD)
-  #sed '/@tic/d' -i Makefile
 }
 
 build() {
