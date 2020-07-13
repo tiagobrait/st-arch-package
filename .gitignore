@@ -9,6 +9,7 @@
 *.log.*
 *.sig
 *.swp
+*.oldsf
 
 pkg/
 src/
