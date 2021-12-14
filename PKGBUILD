@@ -13,7 +13,7 @@ depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses' 'git')
 source=('git://git.suckless.org/st'
 'st-custom-tiagobrait.diff'
-'st-scrollback-20200419-72e3f6c.diff'
+'st-scrollback-20210507-4536f46.diff'
 'st-scrollback-mouse-20191024-a2c479c.diff'
 'st-scrollback-mouse-altscreen-20200416-5703aa0.diff'
 'st-hidecursor-0.8.2.diff'
@@ -28,7 +28,7 @@ source=('git://git.suckless.org/st'
 
 sha1sums=('SKIP'
           '2022825f74dc66cd3ab0827822bfe30c45a9c42b'
-          'dc07dee769ac206f167cd9f274f3862a240d0de4'
+          '04ffc556dcc7b40f490ef6a2bea48787bdd47b7b'
           'e457b4819f5233999e21d6df8438931160cd9181'
           '49ffb0dd6cce1cbfeb12e8599e21b7157b85b1d4'
           'b020afee7209a55014dbc317606c7443461a1c03'
