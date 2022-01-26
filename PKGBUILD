@@ -3,62 +3,61 @@
 #'https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/st'
 
 pkgname=st
-pkgver=0.8.4
+pkgver=0.8.5
 pkgrel=99
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64')
 license=('MIT')
 depends=('libxft' 'libxext' 'xorg-fonts-misc')
-makedepends=('ncurses' 'git')
-source=('git://git.suckless.org/st'
-'st-custom-tiagobrait.diff'
-'st-scrollback-20210507-4536f46.diff'
-'st-scrollback-mouse-20191024-a2c479c.diff'
-'st-scrollback-mouse-altscreen-20200416-5703aa0.diff'
-'st-hidecursor-0.8.2.diff'
-'st-clipboard-20180309-c5ba9c0.diff'
-'st-bold-is-not-bright-0.8.2.diff'
-'st-base16-0.8.2.diff'
-'st-anysize-0.8.2.diff'
-'st-vertcenter-20180320-6ac8c8a.diff'
-'st-boxdraw_v2-0.8.3.diff'
+makedepends=('ncurses')
+source=('https://dl.suckless.org/st/st-0.8.5.tar.gz'
+        'custom-tiagobrait.diff'
+        'hidecursor.diff'
+        'vertcenter.diff'
+        'clipboard.diff'
+        'scrollback.diff'
+        'scrollback-mouse.diff'
+        'scrollback-mouse-altscreen.diff'
+        'bold-is-not-bright.diff'
+        'anysize.diff'
+        'boxdraw.diff'
+        'base16-default-dark-theme.diff'
 )
 
-
-sha1sums=('SKIP'
-          '2022825f74dc66cd3ab0827822bfe30c45a9c42b'
-          '04ffc556dcc7b40f490ef6a2bea48787bdd47b7b'
-          'e457b4819f5233999e21d6df8438931160cd9181'
-          '49ffb0dd6cce1cbfeb12e8599e21b7157b85b1d4'
-          'b020afee7209a55014dbc317606c7443461a1c03'
-          'ef12fb41f1405b7236755eb1ca320b39ed03fe58'
-          'bef42114952e4fead262bb1b491112014ac7bc39'
-          'fbd757314885a7c229f8db67b129f2f48289bbd1'
-          'a75f5eaee7b05b1cd960ef133a34d3aeb69d8f27'
-          'aad7fb654ab36b122a36c3e8a87a7135d50ef749'
-          'e8761bf9e0b4f8c056c6e9b4c88261d78b205620')
+sha1sums=('774b4a687a54a7c91d25dceefa791c221f804308'
+          '597db5f28cdf39fc6aa9b036fe26424005c9588e'
+          '8a2cc5ee42819ebd34fc07aa0e6483479fcee5c9'
+          'f3e4887a04f9500128eeceeb768249cf876db0d6'
+          '7946bafaddc96546b67496ccf5f68302e1125657'
+          'a36e58a39d695c957299e4d00fe762d4c618ee07'
+          '06dcc2964004a23eff9e4c70c2b9124718aa1a37'
+          '88e49f7c776d2cc3498c877daca39a4c77319484'
+          'f9026995402369fbe72e2629c788d21f2574c3bf'
+          'd14fc3d809e66eedf54a12fb120fffc0662e60c8'
+          '78d3e0b34cd795018abae3c296e953aa888c7a3f'
+          '0476165ef3e2a9a84e0fac9c20c9957d4d1676cf')
 
 
 prepare() {
   local file
-  cd "${srcdir}/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   for file in "${source[@]}"; do
     if [[ "${file}" == *.diff ]]; then
-      msg "Applying ${file} patch..."
-      patch -Np1 <"${srcdir}/${file}"
+      msg "Applying [35m${file/.diff/}[0m patch..."
+      patch -p1 <"${srcdir}/${file}"
     fi
   done
   mv config.def.h config.h
 }
 
 build() {
-  cd "${srcdir}/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11
 }
 
 package() {
-  cd "${srcdir}/${pkgname}"
+  cd "${srcdir}/${pkgname}-${pkgver}"
   make PREFIX=/usr DESTDIR="${pkgdir}" install
   install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
   install -Dm644 README "${pkgdir}/usr/share/doc/${pkgname}/README"

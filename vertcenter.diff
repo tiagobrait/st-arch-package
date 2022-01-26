@@ -1,6 +1,8 @@
---- a/x.c	Tue Mar 20 00:28:57 2018
-+++ b/x.c	Tue Mar 20 00:29:02 2018
-@@ -80,6 +80,7 @@
+diff --git a/x.c b/x.c
+index c5fcc92..1df19d2 100644
+--- a/x.c
++++ b/x.c
+@@ -83,6 +83,7 @@ typedef struct {
  	int w, h; /* window width and height */
  	int ch; /* char height */
  	int cw; /* char width  */
@@ -8,7 +10,7 @@
  	int mode; /* window state/mode flags */
  	int cursor; /* cursor style */
  } TermWindow;
-@@ -949,6 +950,7 @@
+@@ -1027,6 +1028,7 @@ xloadfonts(const char *fontstr, double fontsize)
  	/* Setting character width and height. */
  	win.cw = ceilf(dc.font.width * cwscale);
  	win.ch = ceilf(dc.font.height * chscale);
@@ -16,7 +18,7 @@
  
  	FcPatternDel(pattern, FC_SLANT);
  	FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
-@@ -1130,7 +1132,7 @@
+@@ -1254,7 +1256,7 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  	FcCharSet *fccharset;
  	int i, f, numspecs = 0;
  
@@ -25,7 +27,7 @@
  		/* Fetch rune and mode for current glyph. */
  		rune = glyphs[i].u;
  		mode = glyphs[i].mode;
-@@ -1155,7 +1157,7 @@
+@@ -1279,7 +1281,7 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  				font = &dc.bfont;
  				frcflags = FRC_BOLD;
  			}
@@ -34,7 +36,7 @@
  		}
  
  		/* Lookup character index with default font. */
-@@ -1371,12 +1373,12 @@
+@@ -1492,12 +1494,12 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  
  	/* Render underline and strikethrough. */
  	if (base.mode & ATTR_UNDERLINE) {

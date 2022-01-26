@@ -1,23 +1,25 @@
 diff --git a/config.def.h b/config.def.h
-index 4b3bf15..1986316 100644
+index cac8715..6f7820c 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -163,8 +163,8 @@ static uint forcemousemod = ShiftMask;
+@@ -183,9 +183,9 @@ static uint forcemousemod = ShiftMask;
   */
  static MouseShortcut mshortcuts[] = {
  	/* mask                 button   function        argument       release */
 -	{ ShiftMask,            Button4, kscrollup,      {.i = 1} },
 -	{ ShiftMask,            Button5, kscrolldown,    {.i = 1} },
+-	{ XK_ANY_MOD,           Button2, clippaste,       {.i = 0},      1 },
 +	{ XK_ANY_MOD,           Button4, kscrollup,      {.i = 1},      0, /* !alt */ -1 },
 +	{ XK_ANY_MOD,           Button5, kscrolldown,    {.i = 1},      0, /* !alt */ -1 },
- 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
++	{ XK_ANY_MOD,           Button2, clippaste,       {.i = 0},      1 },
+ 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
  	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
- 	{ XK_ANY_MOD,           Button5, ttysend,        {.s = "\005"} },
+ 	{ ShiftMask,            Button5, ttysend,        {.s = "\033[6;2~"} },
 diff --git a/st.c b/st.c
-index f8b6f67..dd4cb31 100644
---- st.c
-+++ st.c
-@@ -1045,6 +1045,11 @@ tnew(int col, int row)
+index f3af82b..876a6bf 100644
+--- a/st.c
++++ b/st.c
+@@ -1060,6 +1060,11 @@ tnew(int col, int row)
  	treset();
  }
  
@@ -30,9 +32,9 @@ index f8b6f67..dd4cb31 100644
  tswapscreen(void)
  {
 diff --git a/st.h b/st.h
-index 1332cf1..f9ad815 100644
---- st.h
-+++ st.h
+index da36b34..e95c6f8 100644
+--- a/st.h
++++ b/st.h
 @@ -89,6 +89,7 @@ void sendbreak(const Arg *);
  void toggleprinter(const Arg *);
  
@@ -42,9 +44,9 @@ index 1332cf1..f9ad815 100644
  void tresize(int, int);
  void tsetdirtattr(int);
 diff --git a/x.c b/x.c
-index e5f1737..b8fbd7b 100644
---- x.c
-+++ x.c
+index 2b31187..cba361e 100644
+--- a/x.c
++++ b/x.c
 @@ -34,6 +34,7 @@ typedef struct {
  	void (*func)(const Arg *);
  	const Arg arg;
@@ -53,7 +55,7 @@ index e5f1737..b8fbd7b 100644
  } MouseShortcut;
  
  typedef struct {
-@@ -446,6 +447,7 @@ mouseaction(XEvent *e, uint release)
+@@ -454,6 +455,7 @@ mouseaction(XEvent *e, uint release)
  	for (ms = mshortcuts; ms < mshortcuts + LEN(mshortcuts); ms++) {
  		if (ms->release == release &&
  		    ms->button == e->xbutton.button &&

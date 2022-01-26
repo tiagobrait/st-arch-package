@@ -1,51 +1,57 @@
 diff --git a/config.def.h b/config.def.h
-index 0895a1f..1c75ede 100644
+index 91ab8ca..7824a2e 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -5,7 +5,7 @@
+@@ -5,7 +5,14 @@
   *
   * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
   */
 -static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
-+static char *font = "DejaVuSansMono Nerd Font:size=11:antialias=true:autohint=true,Font Awesome 5 Free:size=11:antialias=true:autohint=true";
++
++static char *font = "DejaVuSansMono Nerd Font:style=Book:size=11:antialias=true:autohint=true";
++static char *font2[] = {
++  "DejaVu Sans Mono for Powerline:style=Book:size=11:antialias=true:autohint=true",
++  "Font Awesome 5 Free:style=Solid:size=11:antialias=true:autohint=true",
++  "icomoon:style=Regular:size=11:antialias=true:autohint=true"
++};
++
  static int borderpx = 2;
  
  /*
-@@ -17,7 +17,7 @@ static int borderpx = 2;
+@@ -17,7 +24,7 @@ static int borderpx = 2;
   * 5: value of shell in config.h
   */
  static char *shell = "/bin/sh";
 -char *utmp = NULL;
-+char *utmp = "/bin/utmp";
++char *utmp = "/usr/bin/utmp";
  /* scroll program: to enable use a string like "scroll" */
  char *scroll = NULL;
  char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
-@@ -187,7 +187,9 @@ static MouseShortcut mshortcuts[] = {
+@@ -189,7 +196,8 @@ static MouseShortcut mshortcuts[] = {
  
  static Shortcut shortcuts[] = {
  	/* mask                 keysym          function        argument */
 -	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
 +  { MODKEY | ShiftMask,   XK_Insert,      clippaste,      {.i =  0} },
 +  { XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =  0} },
-+  { ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
  	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
  	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
  	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-@@ -276,7 +278,7 @@ static Key key[] = {
+@@ -278,7 +286,7 @@ static Key key[] = {
  	{ XK_KP_Delete,     ControlMask,    "\033[3;5~",    +1,    0},
  	{ XK_KP_Delete,     ShiftMask,      "\033[2K",      -1,    0},
  	{ XK_KP_Delete,     ShiftMask,      "\033[3;2~",    +1,    0},
 -	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[P",       -1,    0},
-+	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[3~",       -1,    0},
++	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[3~",      -1,    0},
  	{ XK_KP_Delete,     XK_ANY_MOD,     "\033[3~",      +1,    0},
  	{ XK_KP_Multiply,   XK_ANY_MOD,     "\033Oj",       +2,    0},
  	{ XK_KP_Add,        XK_ANY_MOD,     "\033Ok",       +2,    0},
-@@ -344,7 +346,7 @@ static Key key[] = {
+@@ -346,7 +354,7 @@ static Key key[] = {
  	{ XK_Delete,        ControlMask,    "\033[3;5~",    +1,    0},
  	{ XK_Delete,        ShiftMask,      "\033[2K",      -1,    0},
  	{ XK_Delete,        ShiftMask,      "\033[3;2~",    +1,    0},
 -	{ XK_Delete,        XK_ANY_MOD,     "\033[P",       -1,    0},
-+	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",       -1,    0},
++	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      -1,    0},
  	{ XK_Delete,        XK_ANY_MOD,     "\033[3~",      +1,    0},
  	{ XK_BackSpace,     XK_NO_MOD,      "\177",          0,    0},
  	{ XK_BackSpace,     Mod1Mask,       "\033\177",      0,    0},

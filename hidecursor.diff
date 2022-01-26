@@ -1,20 +1,20 @@
 diff --git a/x.c b/x.c
-index bc3ad5a..dccc714 100644
+index 8a16faa..c5fcc92 100644
 --- a/x.c
 +++ b/x.c
-@@ -99,6 +99,11 @@ typedef struct {
- 	Draw draw;
- 	Visual *vis;
+@@ -105,6 +105,11 @@ typedef struct {
  	XSetWindowAttributes attrs;
+ 	int scr;
+ 	int isfixed; /* is fixed geometry? */
 +	/* Here, we use the term *pointer* to differentiate the cursor
 +	 * one sees when hovering the mouse over the terminal from, e.g.,
 +	 * a green rectangle where text would be entered. */
 +	Cursor vpointer, bpointer; /* visible and hidden pointers */
 +	int pointerisvisible;
- 	int scr;
- 	int isfixed; /* is fixed geometry? */
  	int l, t; /* left and top offset */
-@@ -678,6 +683,13 @@ brelease(XEvent *e)
+ 	int gm; /* geometry mask */
+ } XWindow;
+@@ -700,6 +705,13 @@ brelease(XEvent *e)
  void
  bmotion(XEvent *e)
  {
@@ -28,7 +28,7 @@ index bc3ad5a..dccc714 100644
  	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forcemousemod)) {
  		mousereport(e);
  		return;
-@@ -1062,11 +1074,10 @@ void
+@@ -1114,10 +1126,10 @@ void
  xinit(int cols, int rows)
  {
  	XGCValues gcvalues;
@@ -36,13 +36,12 @@ index bc3ad5a..dccc714 100644
  	Window parent;
  	pid_t thispid = getpid();
  	XColor xmousefg, xmousebg;
--
 +	Pixmap blankpm;
+ 
  	if (!(xw.dpy = XOpenDisplay(NULL)))
  		die("can't open display\n");
- 	xw.scr = XDefaultScreen(xw.dpy);
-@@ -1126,8 +1137,9 @@ xinit(int cols, int rows)
- 	ximopen(xw.dpy);
+@@ -1181,8 +1193,9 @@ xinit(int cols, int rows)
+ 	}
  
  	/* white cursor, black outline */
 -	cursor = XCreateFontCursor(xw.dpy, mouseshape);
@@ -53,19 +52,18 @@ index bc3ad5a..dccc714 100644
  
  	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
  		xmousefg.red   = 0xffff;
-@@ -1141,7 +1153,10 @@ xinit(int cols, int rows)
+@@ -1196,7 +1209,9 @@ xinit(int cols, int rows)
  		xmousebg.blue  = 0x0000;
  	}
  
 -	XRecolorCursor(xw.dpy, cursor, &xmousefg, &xmousebg);
 +	XRecolorCursor(xw.dpy, xw.vpointer, &xmousefg, &xmousebg);
 +	blankpm = XCreateBitmapFromData(xw.dpy, xw.win, &(char){0}, 1, 1);
-+	xw.bpointer = XCreatePixmapCursor(xw.dpy, blankpm, blankpm,
-+					  &xmousefg, &xmousebg, 0, 0);
++	xw.bpointer = XCreatePixmapCursor(xw.dpy, blankpm, blankpm, &xmousefg, &xmousebg, 0, 0);
  
  	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
  	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
-@@ -1631,6 +1646,8 @@ unmap(XEvent *ev)
+@@ -1705,6 +1720,8 @@ unmap(XEvent *ev)
  void
  xsetpointermotion(int set)
  {
@@ -74,7 +72,7 @@ index bc3ad5a..dccc714 100644
  	MODBIT(xw.attrs.event_mask, set, PointerMotionMask);
  	XChangeWindowAttributes(xw.dpy, xw.win, CWEventMask, &xw.attrs);
  }
-@@ -1749,6 +1766,12 @@ kpress(XEvent *ev)
+@@ -1824,6 +1841,12 @@ kpress(XEvent *ev)
  	Status status;
  	Shortcut *bp;
  
