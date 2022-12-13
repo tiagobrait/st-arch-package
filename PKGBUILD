@@ -3,15 +3,15 @@
 #'https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/st'
 
 pkgname=st
-pkgver=0.8.5
-pkgrel=99
+pkgver=0.9
+pkgrel=1
 pkgdesc='Simple virtual terminal emulator for X'
 url='http://git.suckless.org/st/'
 arch=('i686' 'x86_64')
 license=('MIT')
 depends=('libxft' 'libxext' 'xorg-fonts-misc')
 makedepends=('ncurses')
-source=('https://dl.suckless.org/st/st-0.8.5.tar.gz'
+source=("https://dl.suckless.org/st/st-${pkgver}.tar.gz"
         'custom-tiagobrait.diff'
         'hidecursor.diff'
         'vertcenter.diff'
@@ -23,20 +23,22 @@ source=('https://dl.suckless.org/st/st-0.8.5.tar.gz'
         'anysize.diff'
         'boxdraw.diff'
         'base16-default-dark-theme.diff'
+        'font2.diff'
 )
 
-sha1sums=('774b4a687a54a7c91d25dceefa791c221f804308'
-          '597db5f28cdf39fc6aa9b036fe26424005c9588e'
-          '8a2cc5ee42819ebd34fc07aa0e6483479fcee5c9'
-          'f3e4887a04f9500128eeceeb768249cf876db0d6'
-          '7946bafaddc96546b67496ccf5f68302e1125657'
-          'a36e58a39d695c957299e4d00fe762d4c618ee07'
+sha1sums=('c93587f7021b524dcbb712013c5a7bd92d4f47f2'
+          'cd593374f6f978b5741bbc34b2d09cdf34905081'
+          'cad68e6a3e39a78c5bf35d4a31cdefc911a020b5'
+          '0022448c825d42d7260351db5f40ca361a17a2a8'
+          '376b25261a0fc9d05417b7d8404170984dd86da5'
+          'fe14277f8c0a9c27f9a23c4b09450e57c7c1a3d0'
           '06dcc2964004a23eff9e4c70c2b9124718aa1a37'
-          '88e49f7c776d2cc3498c877daca39a4c77319484'
-          'f9026995402369fbe72e2629c788d21f2574c3bf'
-          'd14fc3d809e66eedf54a12fb120fffc0662e60c8'
-          '78d3e0b34cd795018abae3c296e953aa888c7a3f'
-          '0476165ef3e2a9a84e0fac9c20c9957d4d1676cf')
+          '4c1630fb75b479d4dc691b8dcd715cdb75c3a4e1'
+          'd7cc074555cd556beed7ba3fc8775ec3b9dfe247'
+          '6a1ee1ef9b010ca85789531fa0e05fb83eee046f'
+          '42897cbf46a5d88985feb42b2e909ca6e41abf0b'
+          '0476165ef3e2a9a84e0fac9c20c9957d4d1676cf'
+          'f76d19edc1d8d7d9adbe17b01ea2a15f51df57c5')
 
 
 prepare() {

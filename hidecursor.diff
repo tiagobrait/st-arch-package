@@ -14,7 +14,7 @@ index 8a16faa..c5fcc92 100644
  	int l, t; /* left and top offset */
  	int gm; /* geometry mask */
  } XWindow;
-@@ -700,6 +705,13 @@ brelease(XEvent *e)
+@@ -716,6 +721,13 @@ brelease(XEvent *e)
  void
  bmotion(XEvent *e)
  {
@@ -28,7 +28,7 @@ index 8a16faa..c5fcc92 100644
  	if (IS_SET(MODE_MOUSE) && !(e->xbutton.state & forcemousemod)) {
  		mousereport(e);
  		return;
-@@ -1114,10 +1126,10 @@ void
+@@ -1130,10 +1142,10 @@ void
  xinit(int cols, int rows)
  {
  	XGCValues gcvalues;
@@ -40,7 +40,7 @@ index 8a16faa..c5fcc92 100644
  
  	if (!(xw.dpy = XOpenDisplay(NULL)))
  		die("can't open display\n");
-@@ -1181,8 +1193,9 @@ xinit(int cols, int rows)
+@@ -1197,8 +1209,9 @@ xinit(int cols, int rows)
  	}
  
  	/* white cursor, black outline */
@@ -52,7 +52,7 @@ index 8a16faa..c5fcc92 100644
  
  	if (XParseColor(xw.dpy, xw.cmap, colorname[mousefg], &xmousefg) == 0) {
  		xmousefg.red   = 0xffff;
-@@ -1196,7 +1209,9 @@ xinit(int cols, int rows)
+@@ -1212,7 +1225,9 @@ xinit(int cols, int rows)
  		xmousebg.blue  = 0x0000;
  	}
  
@@ -63,7 +63,7 @@ index 8a16faa..c5fcc92 100644
  
  	xw.xembed = XInternAtom(xw.dpy, "_XEMBED", False);
  	xw.wmdeletewin = XInternAtom(xw.dpy, "WM_DELETE_WINDOW", False);
-@@ -1705,6 +1720,8 @@ unmap(XEvent *ev)
+@@ -1721,6 +1736,8 @@ unmap(XEvent *ev)
  void
  xsetpointermotion(int set)
  {
@@ -72,7 +72,7 @@ index 8a16faa..c5fcc92 100644
  	MODBIT(xw.attrs.event_mask, set, PointerMotionMask);
  	XChangeWindowAttributes(xw.dpy, xw.win, CWEventMask, &xw.attrs);
  }
-@@ -1824,6 +1841,12 @@ kpress(XEvent *ev)
+@@ -1840,6 +1857,12 @@ kpress(XEvent *ev)
  	Status status;
  	Shortcut *bp;
  

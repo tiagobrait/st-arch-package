@@ -2,7 +2,7 @@ diff --git a/x.c b/x.c
 index cba361e..05b1ce0 100644
 --- a/x.c
 +++ b/x.c
-@@ -1417,10 +1417,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
+@@ -1432,10 +1432,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  		bg = &dc.col[base.bg];
  	}
  

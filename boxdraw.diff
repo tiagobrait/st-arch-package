@@ -463,23 +463,8 @@ index 6f7820c..6499496 100644
  /*
   * bell volume. It must be a value between -100 and 100. Use 0 for disabling
   * it
-diff --git a/st.c b/st.c
-index 876a6bf..ed851ab 100644
---- a/st.c
-+++ b/st.c
-@@ -1289,6 +1289,10 @@ tsetchar(Rune u, const Glyph *attr, int x, int y)
- 	term.dirty[y] = 1;
- 	term.line[y][x] = *attr;
- 	term.line[y][x].u = u;
-+
-+	if (isboxdraw(u))
-+		term.line[y][x].mode |= ATTR_BOXDRAW;
-+
- }
- 
- void
 diff --git a/st.h b/st.h
-index e95c6f8..9df4a24 100644
+index aef72ef..a584b72 100644
 --- a/st.h
 +++ b/st.h
 @@ -33,6 +33,7 @@ enum glyph_attribute {
@@ -502,19 +487,20 @@ index e95c6f8..9df4a24 100644
 +void drawboxes(int, int, int, int, XftColor *, XftColor *, const XftGlyphFontSpec *, int);
 +#endif
 +
- int xgetcolor(int x, unsigned char *r, unsigned char *g, unsigned char *b);
- 
  /* config.h globals */
-@@ -129,3 +138,4 @@ extern unsigned int tabspaces;
+ extern char *utmp;
+ extern char *scroll;
+@@ -127,3 +136,4 @@ extern unsigned int tabspaces;
  extern unsigned int defaultfg;
  extern unsigned int defaultbg;
  extern unsigned int defaultcs;
 +extern const int boxdraw, boxdraw_bold, boxdraw_braille;
 diff --git a/x.c b/x.c
-index b35e4ce..c069085 100644
+diff --git a/x.c b/x.c
+index 07228e1..693f12f 100644
 --- a/x.c
 +++ b/x.c
-@@ -1246,6 +1246,8 @@ xinit(int cols, int rows)
+@@ -1261,6 +1261,8 @@ xinit(int cols, int rows)
  	xsel.xtarget = XInternAtom(xw.dpy, "UTF8_STRING", 0);
  	if (xsel.xtarget == None)
  		xsel.xtarget = XA_STRING;
@@ -523,7 +509,7 @@ index b35e4ce..c069085 100644
  }
  
  int
-@@ -1292,8 +1294,13 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
+@@ -1307,8 +1309,13 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  			yp = winy + font->ascent + win.cyo;
  		}
  
@@ -539,13 +525,13 @@ index b35e4ce..c069085 100644
  		if (glyphidx) {
  			specs[numspecs].font = font->match;
  			specs[numspecs].glyph = glyphidx;
-@@ -1493,9 +1500,13 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
+@@ -1508,9 +1515,12 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  	r.width = width;
  	XftDrawSetClipRectangles(xw.draw, winx, winy, &r, 1);
  
 -	/* Render the glyphs. */
 -	XftDrawGlyphFontSpec(xw.draw, fg, specs, len);
- 
+-
 +	if (base.mode & ATTR_BOXDRAW) {
 +		drawboxes(winx, winy, width / len, win.ch, fg, bg, specs, len);
 +	} else {
@@ -554,8 +540,8 @@ index b35e4ce..c069085 100644
 +	}
  	/* Render underline and strikethrough. */
  	if (base.mode & ATTR_UNDERLINE) {
- 		XftDrawRect(xw.draw, fg, winx, winy + win.cyo + dc.font.ascent + 1,
-@@ -1537,7 +1548,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+ 		XftDrawRect(xw.draw, fg, winx, winy + win.cyo + dc.font.ascent * chscale + 1,
+@@ -1552,7 +1562,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
  	/*
  	 * Select the right color for the right mode.
  	 */
@@ -563,4 +549,4 @@ index b35e4ce..c069085 100644
 +	g.mode &= ATTR_BOLD|ATTR_ITALIC|ATTR_UNDERLINE|ATTR_STRUCK|ATTR_WIDE|ATTR_BOXDRAW;
  
  	if (IS_SET(MODE_REVERSE)) {
- 		g.mode |= ATTR_REVERSE;
+ 		g.mode |= ATTR_REVERSE;		g.mode |= ATTR_REVERSE;

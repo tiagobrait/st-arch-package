@@ -19,7 +19,7 @@ diff --git a/st.c b/st.c
 index f3af82b..876a6bf 100644
 --- a/st.c
 +++ b/st.c
-@@ -1060,6 +1060,11 @@ tnew(int col, int row)
+@@ -1053,6 +1053,11 @@ tnew(int col, int row)
  	treset();
  }
  
@@ -55,7 +55,7 @@ index 2b31187..cba361e 100644
  } MouseShortcut;
  
  typedef struct {
-@@ -454,6 +455,7 @@ mouseaction(XEvent *e, uint release)
+@@ -461,6 +462,7 @@ mouseaction(XEvent *e, uint release)
  	for (ms = mshortcuts; ms < mshortcuts + LEN(mshortcuts); ms++) {
  		if (ms->release == release &&
  		    ms->button == e->xbutton.button &&

@@ -11,7 +11,7 @@ index 91ab8ca..7824a2e 100644
 +static char *font = "DejaVuSansMono Nerd Font:style=Book:size=11:antialias=true:autohint=true";
 +static char *font2[] = {
 +  "DejaVu Sans Mono for Powerline:style=Book:size=11:antialias=true:autohint=true",
-+  "Font Awesome 5 Free:style=Solid:size=11:antialias=true:autohint=true",
++  "Font Awesome 6 Free Solid:style=Solid:size=11:antialias=true:autohint=true",
 +  "icomoon:style=Regular:size=11:antialias=true:autohint=true"
 +};
 +

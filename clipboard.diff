@@ -2,7 +2,7 @@ diff --git a/config.def.h b/config.def.h
 index 7824a2e..7617239 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -183,7 +183,7 @@ static uint forcemousemod = ShiftMask;
+@@ -183,7 +194,7 @@ static uint forcemousemod = ShiftMask;
   */
  static MouseShortcut mshortcuts[] = {
  	/* mask                 button   function        argument       release */
@@ -15,7 +15,7 @@ diff --git a/x.c b/x.c
 index 1df19d2..2b31187 100644
 --- a/x.c
 +++ b/x.c
-@@ -681,6 +681,8 @@ setsel(char *str, Time t)
+@@ -692,6 +692,8 @@ setsel(char *str, Time t)
  	XSetSelectionOwner(xw.dpy, XA_PRIMARY, xw.win, t);
  	if (XGetSelectionOwner(xw.dpy, XA_PRIMARY) != xw.win)
  		selclear();
